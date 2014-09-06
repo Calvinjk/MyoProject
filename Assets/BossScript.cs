@@ -20,8 +20,8 @@ public class BossScript : MonoBehaviour {
 	public GUIText 		hitsGT;
 	public int			enemyHP = 30;
 
-	public bool 		bossMoveAway = false;
-	public bool			bossMovesClose = true;
+	public bool 		bossMoveAway = true;
+	public bool			bossMovesClose = false;
 	int					counter = 0;
 
 
@@ -40,7 +40,7 @@ public class BossScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//basic movement coming towards you may need edits, may prevent backqards movement
-		pos.x -= bossSpeed * Time.deltaTime;
+		pos.x += bossSpeed * Time.deltaTime;
 		transform.position = pos;
 		//changing direction
 		//if he gets within distance to camera 
@@ -50,9 +50,10 @@ public class BossScript : MonoBehaviour {
 			bossSpeed = 0f;	
 			//same, but in the other direction, but the if clause needs to change to some distance from camera
 		} else if (pos.x - Camera.main.transform.position.x > farDistanceThreshold) {
-
+			Debug.Log("stopped called");
 			bossSpeed = 0f;	
 			if (bossMoveAway) {
+				Debug.Log("throwProjectiles called");
 				throwProjectiles(3);
 			}
 			bossMoveAway = false;
