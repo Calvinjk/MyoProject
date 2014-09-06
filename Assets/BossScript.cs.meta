@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: b7db93b8c9ac54c4b8ce6fc2fb6fd2ca
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - projectilePrefab: {fileID: 100000, guid: 9a74c982f6927014ba5a58353fcfc6cb, type: 2}
+  - leftArm: {fileID: 100004, guid: 6f48606f66df00a499d65c4c55a518e8, type: 2}
+  - hitsGT: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
