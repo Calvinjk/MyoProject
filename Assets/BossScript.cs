@@ -40,7 +40,7 @@ public class BossScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//basic movement coming towards you may need edits, may prevent backqards movement
-		pos.x -= bossSpeed * Time.deltaTime;
+		pos.x += bossSpeed * Time.deltaTime;
 		transform.position = pos;
 		//changing direction
 		//if he gets within distance to camera 
