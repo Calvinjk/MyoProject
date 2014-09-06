@@ -15,13 +15,13 @@ public class BossScript : MonoBehaviour {
 	public float 		farDistanceThreshold = 12;	//where he should stop away from cam
 
 	public GameObject	projectilePrefab;
-	public GameObject 	leftArm;
+	GameObject 	leftArm;
 
 	public GUIText 		hitsGT;
 	public int			enemyHP = 30;
 
-	public bool 		bossMoveAway = true;
-	public bool			bossMovesClose = false;
+	bool 		bossMoveAway = true;
+	bool			bossMovesClose = false;
 	int					counter = 0;
 
 
@@ -34,7 +34,8 @@ public class BossScript : MonoBehaviour {
 		hitsGT.text = "Enemy Health: ";
 
 		pos = this.transform.position;
-		leftArm = GameObject.Find ("leftHand");
+		leftArm = GameObject.Find ("Left hand");
+		Debug.Log(leftArm.transform.position);
 	}
 	
 	// Update is called once per frame
@@ -50,10 +51,8 @@ public class BossScript : MonoBehaviour {
 			bossSpeed = 0f;	
 			//same, but in the other direction, but the if clause needs to change to some distance from camera
 		} else if (pos.x - Camera.main.transform.position.x > farDistanceThreshold) {
-			Debug.Log("stopped called");
-			bossSpeed = 0f;	
+			bossSpeed = 0f;	;
 			if (bossMoveAway) {
-				Debug.Log("throwProjectiles called");
 				throwProjectiles(3);
 			}
 			bossMoveAway = false;
@@ -90,6 +89,7 @@ public class BossScript : MonoBehaviour {
 			CancelInvoke("shootProjectile");
 		}
 		GameObject projectile = Instantiate (projectilePrefab) as GameObject;
-		projectile.transform.position = leftArm.transform.position;
+		Vector3 projectilePos = leftArm.transform.position;
+		projectile.transform.position = projectilePos;
 	}
 }
