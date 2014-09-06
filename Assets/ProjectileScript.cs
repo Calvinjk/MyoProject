@@ -9,8 +9,8 @@ public class ProjectileScript : MonoBehaviour {
 	public static float distanceX = 19.5f;
 	public static float zShift = 1.5f;
 	public static float yShift = -1.5f;
-	float yVelocity = 0;
-	float zVelocity = 0;
+	public float yVelocity = 0;
+	public float zVelocity = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -31,4 +31,6 @@ public class ProjectileScript : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 	}
+
+
 }
