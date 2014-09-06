@@ -19,6 +19,10 @@ public class SwordScript : MonoBehaviour {
 			Debug.Log ("Successful Deflection");
 		} else if (collidedWith.tag == "Projectile") {
 			Debug.Log ("Successful Deflection");
+			/*collidedWith.gameObject.rigidbody.useGravity = true;
+			collidedWith.gameObject.yVelocity = 0;
+			collidedWith.gameObject.zVelocity = 0;*/
+			Destroy(collidedWith);
 		}
 		
 		

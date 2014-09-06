@@ -10,6 +10,7 @@ public class BossScript : MonoBehaviour {
 	public bool 		attackMode = false; //not yet there
 	public float 		bossSpeed = 10f;
 	public Vector3 		pos;//his pos
+	public int 			numProjectiles = 10;
 
 	public float		closeDistanceThreshold = 2; //where he should stop near cam
 	public float 		farDistanceThreshold = 12;	//where he should stop away from cam
@@ -21,9 +22,9 @@ public class BossScript : MonoBehaviour {
 	public int			enemyHP = 30;
 
 	bool 		bossMoveAway = true;
-	bool			bossMovesClose = false;
+	//bool			bossMovesClose = false;
 	int					counter = 0;
-
+	
 
 
 	// Use this for initialization
@@ -53,7 +54,7 @@ public class BossScript : MonoBehaviour {
 		} else if (pos.x - Camera.main.transform.position.x > farDistanceThreshold) {
 			bossSpeed = 0f;	;
 			if (bossMoveAway) {
-				throwProjectiles(3);
+				throwProjectiles(numProjectiles);
 			}
 			bossMoveAway = false;
 		}
