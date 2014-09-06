@@ -2,22 +2,29 @@
 using System.Collections;
 
 public class BossScript : MonoBehaviour {
+	public float delayBetweenProjectiles = 4f;
 	public KeyCode moveUp;
 	public float		leftAndRightEdge = 50f; //might delete
 	public float		chanceToChangeDirections = 0.1f; //might delete
 	public bool			playerHasBeenHit = false; //for collisions
 	public bool 		attackMode = false; //not yet there
-	public float 		speed = 10f;
+	public float 		bossSpeed = 10f;
 	public Vector3 		pos;//his pos
 
 	public float		closeDistanceThreshold = 2; //where he should stop near cam
 	public float 		farDistanceThreshold = 12;	//where he should stop away from cam
 
 	public GameObject	projectilePrefab;
-	public GameObject 	arms;
+	public GameObject 	leftArm;
 
 	public GUIText 		hitsGT;
 	public int			enemyHP = 30;
+
+	public bool 		bossMoveAway = false;
+	public bool			bossMovesClose = true;
+	int					counter = 0;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -27,33 +34,35 @@ public class BossScript : MonoBehaviour {
 		hitsGT.text = "Enemy Health: ";
 
 		pos = this.transform.position;
-		arms = GameObject.Find ("Arms");
+		leftArm = GameObject.Find ("leftHand");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//basic movement
-		pos.x -= speed * Time.deltaTime;
+		//basic movement coming towards you may need edits, may prevent backqards movement
+		pos.x -= bossSpeed * Time.deltaTime;
 		transform.position = pos;
 		//changing direction
 		//if he gets within distance to camera 
 		if (pos.x - Camera.main.transform.position.x < closeDistanceThreshold) {
 
 			//he shal stop	
-			speed = 0f;	
+			bossSpeed = 0f;	
 			//same, but in the other direction, but the if clause needs to change to some distance from camera
 		} else if (pos.x - Camera.main.transform.position.x > farDistanceThreshold) {
 
-				speed = 0f;	
-			//shootProjectile();
+			bossSpeed = 0f;	
+			if (bossMoveAway) {
+				throwProjectiles(3);
+			}
+			bossMoveAway = false;
 		}
-					}
+	}
 
-	void FixedUpdate(){
-			/*	if (Random.value < chanceToChangeDirections) {
-						speed *= -1; 
-				}*/
-		}
+	void throwProjectiles(int num) {
+		counter = num;
+		InvokeRepeating ("shootProjectile", 1f, delayBetweenProjectiles);
+	}
 
 	//On this collision, sword doesn't take damage
 	void OnCollisionEnter(Collision coll) {
@@ -76,9 +85,10 @@ public class BossScript : MonoBehaviour {
 	}
 
 	void shootProjectile(){
+		if (--counter == 0) {
+			CancelInvoke("shootProjectile");
+		}
 		GameObject projectile = Instantiate (projectilePrefab) as GameObject;
-		projectile.transform.position = arms.transform.position;
-
-		//projectile.transform.position.x = transform.position.x + 10;
+		projectile.transform.position = leftArm.transform.position;
 	}
 }
